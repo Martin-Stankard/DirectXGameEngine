@@ -1,6 +1,5 @@
 #include "Window.h"
 
-//Window* window=nullptr;
 
 Window::Window()
 {
@@ -10,16 +9,17 @@ Window::Window()
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	//GetWindowLong(hwnd,)
+	
 	switch (msg)
 	{
 	case WM_CREATE:
 	{
 		// Event fired when the window is created
-		// collected here..
+		
 		Window* window = (Window*)((LPCREATESTRUCT)lparam)->lpCreateParams;
 		// .. and then stored for later lookup
 		SetWindowLongPtr(hwnd, GWL_USERDATA, (LONG_PTR)window);
+		window->setHWND(hwnd);
 		window->onCreate();
 		break;
 	}
@@ -75,7 +75,7 @@ bool Window::init()
 	if (!m_hwnd) {
 		return false;
 	}
-	//show up the window
+	//show the window
 	::ShowWindow(m_hwnd, SW_SHOW);
 	::UpdateWindow(m_hwnd);
 
@@ -134,6 +134,19 @@ void Window::onUpdate()
 void Window::onDestroy()
 {
 	m_is_run = false;
+}
+
+RECT Window::getClientWindowRect()
+{
+	RECT rc;
+	::GetClientRect(this->m_hwnd, &rc);
+	return rc;
+}
+
+void Window::setHWND(HWND hwnd)
+{
+	this->m_hwnd = hwnd;
+
 }
 
 Window::~Window()
