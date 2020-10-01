@@ -14,11 +14,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	{
 	case WM_CREATE:
 	{
-		// Event fired when the window is created
-		
 		Window* window = (Window*)((LPCREATESTRUCT)lparam)->lpCreateParams;
-		// .. and then stored for later lookup
-		SetWindowLongPtr(hwnd, GWL_USERDATA, (LONG_PTR)window);
+		
+		SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)window);
 		window->setHWND(hwnd);
 		window->onCreate();
 		break;
@@ -27,7 +25,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	case WM_DESTROY:
 	{
 		// Event fired when the window is destroyed
-		Window* window = (Window*)GetWindowLong(hwnd, GWL_USERDATA);
+		Window* window = (Window*)GetWindowLong(hwnd, GWLP_USERDATA);
 		window->onDestroy();
 		::PostQuitMessage(0);
 		break;
@@ -60,14 +58,14 @@ bool Window::init()
 	wc.lpszMenuName = L"";
 	wc.style = NULL;
 	wc.lpfnWndProc = &WndProc;
-	//bad if REgisterClassEx returns false
+	
 	if (!::RegisterClassEx(&wc)) {
 		return false;
 	}
 	
 
-		//Creation of the window
-	m_hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"MyWindowClass", L"DirectX Application",
+		
+	m_hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"MyWindowClass", L"DirectX Game",
 		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768,
 		NULL, NULL, NULL, this);
 
@@ -79,10 +77,7 @@ bool Window::init()
 	::ShowWindow(m_hwnd, SW_SHOW);
 	::UpdateWindow(m_hwnd);
 
-
-
-
-	//set this flag to true to indicate that the window is initialized and running
+	// YES, it is running now : )
 	m_is_run = true;
 
 
@@ -110,7 +105,6 @@ bool Window::broadcast()
 
 bool Window::release()
 {
-	//Destroy the window
 	if (!::DestroyWindow(m_hwnd))
 		return false;
 
