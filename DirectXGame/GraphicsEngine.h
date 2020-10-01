@@ -3,6 +3,7 @@
 
 
 class SwapChain;
+class DeviceContext;
 
 class GraphicsEngine
 {
@@ -15,9 +16,11 @@ public:
 	static GraphicsEngine* get();
 
 	SwapChain* createSwapChain();
-
+	DeviceContext* getImmediateDeviceContext();
 
 private: //boilerplate or magic?
+	DeviceContext* m_imm_device_context;
+
 	ID3D11Device* m_d3d_device;
 	D3D_FEATURE_LEVEL m_feature_level;
 	ID3D11DeviceContext* m_imm_context;
