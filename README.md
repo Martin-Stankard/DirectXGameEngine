@@ -12,7 +12,7 @@ Worked out from (some minor syntax updates) from this Youtube series:
 - solution config: debug
 - solution platform: x86
 - Local Windows debugger
-- (ctrl + f5) -> See a lime green tri on a teal background pop up!
+- (ctrl + f5) -> See a lime green quad on a teal background pop up!
 
 
 ## Graphics Pipeline Stages. Called by (*)-device->Draw()

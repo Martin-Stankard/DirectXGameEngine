@@ -31,9 +31,13 @@ void AppWindow::onCreate()
 	vertex list[] =
 	{
 		
-		{-0.5f,-0.5f,0.0f}, // v1
-		{0.0f,0.5f,0.0f}, // v2
-		{ 0.5f,-0.5f,0.0f} // v3
+		{-0.5f, -0.5f, 0.0f}, // v1
+		{-0.5f, 0.5f, 0.0f}, // v2
+		{ 0.5f, 0.5f, 0.0f}, // v3
+
+		{0.5f, 0.5f, 0.0f}, // v1
+		{0.5f, -0.5f, 0.0f}, // v2
+		{ -0.5f, -0.5f, 0.0f} // v3
 	};
 
 	m_vb = GraphicsEngine::get()->createVertexBuffer();
