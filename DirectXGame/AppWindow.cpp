@@ -31,13 +31,11 @@ void AppWindow::onCreate()
 	vertex list[] =
 	{
 		
-		{-0.5f, -0.5f, 0.0f}, // v1
-		{-0.5f, 0.5f, 0.0f}, // v2
-		{ 0.5f, 0.5f, 0.0f}, // v3
-
-		{0.5f, 0.5f, 0.0f}, // v1
-		{0.5f, -0.5f, 0.0f}, // v2
-		{ -0.5f, -0.5f, 0.0f} // v3
+		{-0.5f, -0.5f, 0.0f},	// v1
+		{-0.5f, 0.5f, 0.0f},	// v2
+		{ 0.5f, -0.5f, 0.0f},	// v3
+		{0.5f, 0.5f, 0.0f},		// v4
+		
 	};
 
 	m_vb = GraphicsEngine::get()->createVertexBuffer();
@@ -69,7 +67,7 @@ void AppWindow::onUpdate()
 	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
 
 	// 3d render lesson from ..2006 finally makes sense...it is all tris in 3d. //TODO, explore per pixel possibilitie
-	GraphicsEngine::get()->getImmediateDeviceContext()->drawTriangleList(m_vb->getSizeVertexList(), 0);
+	GraphicsEngine::get()->getImmediateDeviceContext()->drawTriangleStrip(m_vb->getSizeVertexList(), 0);
 	m_swap_chain->present(true);
 }
 
