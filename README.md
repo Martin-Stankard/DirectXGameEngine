@@ -8,7 +8,7 @@ Worked out from (some minor syntax updates) from this Youtube series:
 
 ###  Build and run notes: 
 - project properties>Linker>Input>Additional Dependencies: add d3d11.lib; d3dcompiler.lib
-    - //TODO ...I would to use pragama syntax instead of clicky-linking....
+    - //TODO ...I would like to use pragma syntax instead of clicky-ui-linking. Todo on mac.
 - solution config: debug
 - solution platform: x86
 - Local Windows debugger
