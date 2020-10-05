@@ -5,6 +5,7 @@
 class SwapChain;
 class DeviceContext;
 class VertexBuffer;
+class VertexShader;
 
 class GraphicsEngine
 {
@@ -15,6 +16,8 @@ public:
 	SwapChain* createSwapChain();
 	DeviceContext* getImmediateDeviceContext();
 	VertexBuffer* createVertexBuffer();
+	VertexShader* createVertexShader(const void* shader_byte_code, size_t byte_code_size );
+	bool compileVertexShader();
 	~GraphicsEngine();
 
 	bool createShaders();
@@ -42,4 +45,5 @@ private:
 
 	friend class SwapChain;
 	friend class VertexBuffer;
+	friend class VertexShader;
 };

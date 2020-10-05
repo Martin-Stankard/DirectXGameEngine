@@ -2,6 +2,7 @@
 #include "SwapChain.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
+#include "VertexShader.h"
 
 #include <d3dcompiler.h>
 
@@ -99,7 +100,25 @@ VertexBuffer* GraphicsEngine::createVertexBuffer()
 	return new VertexBuffer();
 }
 
-// video 5-8 rearranges these the next 3 functions. tricksy.
+VertexShader* GraphicsEngine::createVertexShader(const void* shader_byte_code, size_t byte_code_size)
+{
+	VertexShader* vs = new VertexShader();
+
+	if (!vs->init(shader_byte_code, byte_code_size)) {
+			vs->release();
+			return nullptr;
+	}
+	return vs;
+}
+
+bool GraphicsEngine::compileVertexShader(const wchar_t* filename, const char* entry_point_name );
+{
+	::D3DCompileFromFile(file_name, nullptr, nullptr, entrypoint_name);
+	return false;
+}
+
+
+// video 5-8 rearranges the next 3 functions. tricksy.
 bool GraphicsEngine::createShaders()
 {    
 	ID3DBlob* errblob = nullptr;

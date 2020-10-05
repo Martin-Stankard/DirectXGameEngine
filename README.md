@@ -15,9 +15,21 @@ Worked out from (some minor syntax updates) from this Youtube series:
 - (ctrl + f5) -> See a lime green quad on a teal background pop up!
 
 
+## Notes:
+
 ## Graphics Pipeline Stages. Called by (*)-device->Draw()
 - Input-Assembler stage
 - Programmable Shaders stage
+    - Vertex and Geometry
 - Rasterize stage
 - Pixel Shader stage
 - Output-Merger stage
+
+## Shaders
+- Vertex Shader
+    - performed on gpu. Affine matrix transformations (surprised it isn't colors...)
+- Hull Shader
+- Tesselation Shader
+- Domain Shader
+- Geometry Shader
+- Pixel Shader
