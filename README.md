@@ -7,6 +7,7 @@ Worked out from (some minor syntax updates) from this Youtube series:
 #### Built in Visual Studio 2019(community edition)
 
 ###  Build and run notes: 
+- Windows 10 + Visual Studio 2019 community
 - project properties>Linker>Input>Additional Dependencies: add d3d11.lib; d3dcompiler.lib
     - //TODO ...I would like to use pragma syntax instead of clicky-ui-linking. Todo on mac.
 - solution config: debug
@@ -33,3 +34,4 @@ Worked out from (some minor syntax updates) from this Youtube series:
 - Domain Shader
 - Geometry Shader
 - Pixel Shader
+    - Per pixel shading for surface diffuse + spec = lighting. Also "post" processing effects.

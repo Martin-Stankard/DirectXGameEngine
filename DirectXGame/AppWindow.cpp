@@ -8,6 +8,7 @@ struct vec3
 struct vertex
 {
 	vec3 position;
+	vec3 color;
 };
 
 AppWindow::AppWindow()
@@ -41,17 +42,23 @@ void AppWindow::onCreate()
 	m_vb = GraphicsEngine::get()->createVertexBuffer();
 	UINT size_list = ARRAYSIZE(list);
 
-	GraphicsEngine::get()->createShaders();
-
+	
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
-
+	//vertex shader area
 	GraphicsEngine::get()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
 
 	m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
 
 	m_vb->load(list, sizeof(vertex), size_list, shader_byte_code, size_shader);
 
+	GraphicsEngine::get()->releaseCompiledShader();
+	//pixel shader area
+	GraphicsEngine::get()->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
+
+	m_ps = GraphicsEngine::get()->createPixelShader(shader_byte_code, size_shader);
+
+	
 	GraphicsEngine::get()->releaseCompiledShader();
 }
 
@@ -67,11 +74,10 @@ void AppWindow::onUpdate()
 	
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 	
-	GraphicsEngine::get()->setShaders();
-
-	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexShader(m_vs);
 	
+	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexShader(m_vs);
 	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
+	GraphicsEngine::get()->getImmediateDeviceContext()->setPixelShader(m_ps);
 
 	// 3d render lesson from ..2006 finally makes sense...it is all tris in 3d. //TODO, explore per pixel possibilitie
 	GraphicsEngine::get()->getImmediateDeviceContext()->drawTriangleStrip(m_vb->getSizeVertexList(), 0);
@@ -83,5 +89,7 @@ void AppWindow::onDestroy()
 	Window::onDestroy();
 	m_vb->release();
 	m_swap_chain->release();
+	m_vs->release();
+	m_ps->release();
 	GraphicsEngine::get()->release();
 }
