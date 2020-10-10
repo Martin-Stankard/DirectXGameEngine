@@ -2,12 +2,11 @@
 #### From Scratch, C++ 3D Engine using Direct X 11
 
 Worked out from (some minor syntax updates) from this Youtube series: 
-- https://www.youtube.com/watch?v=ssGka-bSTvQ&list=PLv8DnRaQOs5-ST_VDqgbbMRtzMtpK36Hy
+- [C++ 3D Game From Scratch](https://www.youtube.com/watch?v=ssGka-bSTvQ&list=PLv8DnRaQOs5-ST_VDqgbbMRtzMtpK36Hy)
 
-#### Built in Visual Studio 2019(community edition)
 
 ###  Build and run notes: 
-- Windows 10 + Visual Studio 2019 community
+- Windows 10 + Visual Studio 2019 community edition
 - project properties>Linker>Input>Additional Dependencies: add d3d11.lib; d3dcompiler.lib
     - //TODO ...I would like to use pragma syntax instead of clicky-ui-linking. Todo on mac.
 - solution config: debug
