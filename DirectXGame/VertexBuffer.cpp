@@ -6,7 +6,7 @@ VertexBuffer::VertexBuffer() : m_layout(0), m_buffer(0)
 {
 }
 
-bool VertexBuffer::load(void *list_vertices, UINT size_vertex, UINT size_list, void *shader_byte_code, UINT size_byte_shader)
+bool VertexBuffer::load(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, UINT size_byte_shader)
 {
 	if (m_buffer)
 		m_buffer->Release();
@@ -32,17 +32,27 @@ bool VertexBuffer::load(void *list_vertices, UINT size_vertex, UINT size_list, v
 	}
 
 	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
 		{
-			//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
-			{
-				"POSITION",					 //SEMANTIC NAME
-				0,							 //SEMANTIC INDEX
-				DXGI_FORMAT_R32G32B32_FLOAT, //FORMAT
-				0,							 //INPUT SLOT
-				0,							 //ALIGNED BYTE OFFSET
-				D3D11_INPUT_PER_VERTEX_DATA, //INPUT SLOT CLASS
-				0							 //INSTANCE DATA STEP RATE
-			}};
+			"POSITION",					 //SEMANTIC NAME
+			0,							 //SEMANTIC INDEX
+			DXGI_FORMAT_R32G32B32_FLOAT, //FORMAT
+			0,							 //INPUT SLOT
+			0,							 //ALIGNED BYTE OFFSET
+			D3D11_INPUT_PER_VERTEX_DATA, //INPUT SLOT CLASS
+			0							 //INSTANCE DATA STEP RATE
+		},
+		{
+			"COLOR",					 //SEMANTIC NAME
+			0,							 //SEMANTIC INDEX
+			DXGI_FORMAT_R32G32B32_FLOAT, //FORMAT
+			0,							 //INPUT SLOT
+			12,							 //ALIGNED BYTE OFFSET, here is sum of all previous attributes
+			D3D11_INPUT_PER_VERTEX_DATA, //INPUT SLOT CLASS
+			0							 //INSTANCE DATA STEP RATE
+		}
+	};
 
 	UINT size_layout = ARRAYSIZE(layout);
 
