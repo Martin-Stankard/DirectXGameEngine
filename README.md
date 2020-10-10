@@ -27,7 +27,7 @@ Worked out from (some minor syntax updates) from this Youtube series:
 
 ## Shaders
 - Vertex Shader
-    - performed on gpu. Affine matrix transformations (surprised it isn't colors...I had a self imposed constraint 'shader != 'geometry'....displacement much?)
+    - performed on gpu. Affine matrix transformations (surprised it isn't colors...I had a self imposed constraint 'shader != 'geometry'....displacement?)
 - Hull Shader
 - Tesselation Shader
 - Domain Shader

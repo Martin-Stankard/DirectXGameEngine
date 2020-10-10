@@ -17,12 +17,13 @@ public:
 	DeviceContext* getImmediateDeviceContext();
 	VertexBuffer* createVertexBuffer();
 	VertexShader* createVertexShader(const void* shader_byte_code, size_t byte_code_size );
-	bool compileVertexShader();
+	bool compileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
+	void releaseCompiledShader();
+	
 	~GraphicsEngine();
 
 	bool createShaders();
 	bool setShaders();
-	void getShaderBufferAndSize(void** bytecode, UINT* size);
 
 	static GraphicsEngine* get();
 
@@ -37,6 +38,7 @@ private:
 	IDXGIFactory* m_dxgi_factory;
 	ID3D11DeviceContext* m_imm_context;
 
+	ID3DBlob* m_blob = nullptr;
 	ID3DBlob* m_vsblob = nullptr;
 	ID3DBlob* m_psblob = nullptr;
 	ID3D11VertexShader* m_vs = nullptr;
