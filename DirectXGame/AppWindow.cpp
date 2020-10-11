@@ -44,7 +44,12 @@ void AppWindow::updateQuadPosition()
 //	cc.m_world.setTranslation(Vector3D::lerp( Vector3D(-2,-2,0), Vector3D(2,2,0), m_delta_pos ));
 	m_delta_scale += m_delta_time / 2.0f;
 
-	cc.m_world.setScale(Vector3D::lerp(Vector3D(.5, .5, 0), Vector3D(2, 2, 0), (sin(m_delta_scale)+1.0f)/2.0f));
+	
+	//bad number precision, keeping // to help follow
+	//cc.m_world.setScale(Vector3D::lerp(Vector3D(.5, .5, 0), Vector3D(2, 2, 0), (sin(m_delta_scale)+1.0f)/2.0f));
+	unsigned int prediod_ms = 3000;
+	cc.m_world.setScale(Vector3D::lerp(Vector3D(.5, .5, 0), Vector3D(2, 2, 0), ((sin(2.0f * 3.1416f / prediod_ms * (cc.m_time % prediod_ms)) + 1.0f) / 2.0f)));
+
 
 	cc.m_view.setIdentity();
 	cc.m_proj.setOrthoLH(
