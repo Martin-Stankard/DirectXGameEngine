@@ -8,7 +8,7 @@ Worked out from (some minor syntax updates) from this Youtube series:
 ###  Build and run notes: 
 - Windows 10 + Visual Studio 2019 community edition
 - project properties>Linker>Input>Additional Dependencies: add d3d11.lib; d3dcompiler.lib
-    - //TODO ...I would like to use pragma syntax instead of clicky-ui-linking. Todo on mac.
+    - //TODO ...I would like to use pragma syntax instead of clicky-ui-dependency-linking. Todo on mac? (lol not likely with DX11...)
 - solution config: debug
 - solution platform: x86
 - Local Windows debugger
