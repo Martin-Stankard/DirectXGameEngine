@@ -44,11 +44,20 @@ bool VertexBuffer::load(void* list_vertices, UINT size_vertex, UINT size_list, v
 			0							 //INSTANCE DATA STEP RATE
 		},
 		{
+			"POSITION",					 //SEMANTIC NAME
+			1,							 //SEMANTIC INDEX
+			DXGI_FORMAT_R32G32B32_FLOAT, //FORMAT
+			0,							 //INPUT SLOT
+			12,							 //ALIGNED BYTE OFFSET.
+			D3D11_INPUT_PER_VERTEX_DATA, //INPUT SLOT CLASS
+			0							 //INSTANCE DATA STEP RATE
+		},
+		{
 			"COLOR",					 //SEMANTIC NAME
 			0,							 //SEMANTIC INDEX
 			DXGI_FORMAT_R32G32B32_FLOAT, //FORMAT
 			0,							 //INPUT SLOT
-			12,							 //ALIGNED BYTE OFFSET, here is sum of all previous attributes
+			24,							 //ALIGNED BYTE OFFSET, here is sum of all previous attributes
 			D3D11_INPUT_PER_VERTEX_DATA, //INPUT SLOT CLASS
 			0							 //INSTANCE DATA STEP RATE
 		}
