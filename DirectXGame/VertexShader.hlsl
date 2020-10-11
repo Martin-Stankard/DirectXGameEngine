@@ -30,7 +30,7 @@ VS_OUTPUT vsmain(VS_INPUT input)
 	VS_OUTPUT output = (VS_OUTPUT)0;
 
 	unsigned int prediod_ms = 3000;
-
+	
 	// output.position = lerp(input.position, input.position1, (sin(2.0f * 3.1416f / prediod_ms * (m_time % prediod_ms)) + 1.0f) / 2.0f);
 	
 	// WORLD SPACE

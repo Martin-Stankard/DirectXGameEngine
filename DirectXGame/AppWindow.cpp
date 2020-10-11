@@ -35,7 +35,14 @@ void AppWindow::updateQuadPosition()
 	constant cc;
 	cc.m_time = ::GetTickCount64();
 
-	cc.m_world.setTranslation(Vector3D(0, 0, 0));
+	m_delta_pos += m_delta_time * 1.0f;
+
+	if (m_delta_pos>1.0f) {
+		m_delta_pos = 0;
+	}
+
+	cc.m_world.setTranslation(Vector3D::lerp( Vector3D(-2,-2,0), Vector3D(2,2,0), m_delta_pos ));
+
 	cc.m_view.setIdentity();
 	cc.m_proj.setOrthoLH(
 		(this->getClientWindowRect().right - this->getClientWindowRect().left)/400.0f,
@@ -124,6 +131,17 @@ void AppWindow::onUpdate()
 	// 3d render lesson from ..2006 finally makes sense...it is all tris in 3d. //TODO, explore per pixel possibilitie
 	GraphicsEngine::get()->getImmediateDeviceContext()->drawTriangleStrip(m_vb->getSizeVertexList(), 0);
 	m_swap_chain->present(true);
+
+	m_old_delta = m_new_delta;
+	m_new_delta = ::GetTickCount64();
+
+	// m_delta_time = (m_old_delta)?((m_new_delta - m_old_delta)/1000.0f):0;
+	if (m_old_delta) {
+		m_delta_time = (m_new_delta - m_old_delta) / 1000.0f;
+	}
+	else {
+		m_delta_time = 0;
+	}
 }
 
 void AppWindow::onDestroy()
