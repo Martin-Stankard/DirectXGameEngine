@@ -12,7 +12,7 @@ Worked out from (some minor syntax updates) from this Youtube series:
 - solution config: debug
 - solution platform: x86
 - Local Windows debugger
-- (ctrl + f5) -> See a an animated multi shade quad move on a teal background pop up!
+- (ctrl + f5) -> See a regular square with gently animated color shifts on a teal background pop up!
 
 
 ## Notes:
@@ -34,3 +34,9 @@ Worked out from (some minor syntax updates) from this Youtube series:
 - Geometry Shader
 - Pixel Shader
     - Per pixel shading for surface diffuse + spec = lighting. Also "post" processing effects.
+
+## Coordinate systems
+- Model Space
+- World Space
+- View Space
+- Screen / Projection Space

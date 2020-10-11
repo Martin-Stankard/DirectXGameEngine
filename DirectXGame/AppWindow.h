@@ -8,6 +8,7 @@
 #include "ConstantBuffer.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
+#include "Vector3D.h"
 
 
 class AppWindow: public Window
@@ -15,6 +16,8 @@ class AppWindow: public Window
 public:
 	AppWindow();
 	~AppWindow();
+
+	void updateQuadPosition();
 
 	// Inherited from Window
 	virtual void onCreate() override;
