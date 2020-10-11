@@ -29,6 +29,22 @@ public:
 		m_mat[2][2] = scale.m_z;
 	};
 
+	void operator*=(const Matrix4x4& matrix)
+	{
+		Matrix4x4 out;
+		for (int row = 0; row < 4; row++) {
+			for (int col = 0; col < 4; col++) {
+				out.m_mat[row][col] = m_mat[row][0] * matrix.m_mat[0][col] +
+					m_mat[row][1] * matrix.m_mat[1][col] +
+					m_mat[row][2] * matrix.m_mat[2][col] +
+					m_mat[row][3] * matrix.m_mat[3][col];
+			}
+		}
+
+		::memcpy(m_mat, out.m_mat, sizeof(float) * 16);
+
+	};
+
 	void setOrthoLH(float width, float height, float near_plane, float far_plane) {
 		setIdentity();
 		m_mat[0][0] = 2.0f / width;
