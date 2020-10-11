@@ -8,10 +8,12 @@ VertexBuffer::VertexBuffer() : m_layout(0), m_buffer(0)
 
 bool VertexBuffer::load(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, UINT size_byte_shader)
 {
-	if (m_buffer)
+	if (m_buffer) {
 		m_buffer->Release();
-	if (m_layout)
+	}
+	if (m_layout) {
 		m_layout->Release();
+	}
 
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_DEFAULT;
@@ -58,6 +60,15 @@ bool VertexBuffer::load(void* list_vertices, UINT size_vertex, UINT size_list, v
 			DXGI_FORMAT_R32G32B32_FLOAT, //FORMAT
 			0,							 //INPUT SLOT
 			24,							 //ALIGNED BYTE OFFSET, here is sum of all previous attributes
+			D3D11_INPUT_PER_VERTEX_DATA, //INPUT SLOT CLASS
+			0							 //INSTANCE DATA STEP RATE
+		},
+		{
+			"COLOR",					 //SEMANTIC NAME
+			1,							 //SEMANTIC INDEX
+			DXGI_FORMAT_R32G32B32_FLOAT, //FORMAT
+			0,							 //INPUT SLOT
+			36,							 //ALIGNED BYTE OFFSET, here is sum of all previous attributes
 			D3D11_INPUT_PER_VERTEX_DATA, //INPUT SLOT CLASS
 			0							 //INSTANCE DATA STEP RATE
 		}

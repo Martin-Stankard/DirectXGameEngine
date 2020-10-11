@@ -11,6 +11,7 @@ struct vertex
 	vec3 position;
 	vec3 position1;
 	vec3 color;
+	vec3 color1;
 };
 
 __declspec(align(16))
@@ -39,11 +40,12 @@ void AppWindow::onCreate()
 
 	vertex list[] =
 	{
-		// 
-		{-0.5f, -0.5f, 0.0f,  -0.32f, -0.11f, 0.0f, 	0,0,0},	// v1
-		{-0.5f, 0.5f, 0.0f,	  -0.11f, -0.78f, 0.0f, 	1,1,0},	// v2
-		{ 0.5f, -0.5f, 0.0f,   0.75f, -0.73f, 0.0f,		0,0,1},	// v3
-		{0.5f, 0.5f, 0.0f,	  -0.88f, -0.77f, 0.0f,		1,1,1},	// v4
+		//ALIGNED BYTE OFFSET in VertexBuffer comes from these 
+		// position,				position1,			color, color1
+		{-0.5f, -0.5f, 0.0f,  -0.32f, -0.11f, 0.0f, 	0,0,0, 0,1,0  },	// v1
+		{-0.5f, 0.5f, 0.0f,	  -0.11f,  0.78f, 0.0f, 	1,1,0, 0,1,1 },	// v2
+		{ 0.5f, -0.5f, 0.0f,   0.75f, -0.73f, 0.0f,		0,0,1, 1,0,0 },	// v3
+		{0.5f, 0.5f, 0.0f,	   0.88f, -0.77f, 0.0f,		1,1,1, 0,0,1 },	// v4
 		
 	};
 
@@ -89,7 +91,7 @@ void AppWindow::onUpdate()
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 	
 	constant cc;
-	cc.m_time = ::GetTickCount();
+	cc.m_time = ::GetTickCount64();
 
 	m_cb->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);
 
@@ -97,10 +99,10 @@ void AppWindow::onUpdate()
 	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
 	
 	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexShader(m_vs);
-	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
 
 	GraphicsEngine::get()->getImmediateDeviceContext()->setPixelShader(m_ps);
 
+	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
 	// 3d render lesson from ..2006 finally makes sense...it is all tris in 3d. //TODO, explore per pixel possibilitie
 	GraphicsEngine::get()->getImmediateDeviceContext()->drawTriangleStrip(m_vb->getSizeVertexList(), 0);
 	m_swap_chain->present(true);
