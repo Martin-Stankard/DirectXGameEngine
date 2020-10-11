@@ -20,6 +20,8 @@ public:
 
 	static Vector3D lerp(const Vector3D& start, const Vector3D& end, float delta)
 	{
+		// output.position = lerp(input.position, input.position1, (sin(2.0f * 3.1416f / prediod_ms * (m_time % prediod_ms)) + 1.0f) / 2.0f);
+
 		Vector3D v;
 		v.m_x = start.m_x * (1.0f - delta) + end.m_x * (delta);
 		v.m_y = start.m_y * (1.0f - delta) + end.m_y * (delta);

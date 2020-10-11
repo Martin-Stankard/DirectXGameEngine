@@ -35,13 +35,16 @@ void AppWindow::updateQuadPosition()
 	constant cc;
 	cc.m_time = ::GetTickCount64();
 
-	m_delta_pos += m_delta_time * 1.0f;
+	m_delta_pos += m_delta_time / 10.0f;
 
 	if (m_delta_pos>1.0f) {
 		m_delta_pos = 0;
 	}
 
-	cc.m_world.setTranslation(Vector3D::lerp( Vector3D(-2,-2,0), Vector3D(2,2,0), m_delta_pos ));
+//	cc.m_world.setTranslation(Vector3D::lerp( Vector3D(-2,-2,0), Vector3D(2,2,0), m_delta_pos ));
+	m_delta_scale += m_delta_time / 2.0f;
+
+	cc.m_world.setScale(Vector3D::lerp(Vector3D(.5, .5, 0), Vector3D(2, 2, 0), (sin(m_delta_scale)+1.0f)/2.0f));
 
 	cc.m_view.setIdentity();
 	cc.m_proj.setOrthoLH(

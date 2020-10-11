@@ -20,6 +20,13 @@ public:
 		m_mat[3][0] = translation.m_x;
 		m_mat[3][1] = translation.m_y;
 		m_mat[3][2] = translation.m_z;
+	}
+
+	void setScale(const Vector3D& scale) {
+		setIdentity();
+		m_mat[0][0] = scale.m_x;
+		m_mat[1][1] = scale.m_y;
+		m_mat[2][2] = scale.m_z;
 	};
 
 	void setOrthoLH(float width, float height, float near_plane, float far_plane) {
