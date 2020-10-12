@@ -1,6 +1,5 @@
 #include "Window.h"
 
-
 Window::Window()
 {
 
@@ -9,23 +8,31 @@ Window::Window()
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	
 	switch (msg)
 	{
 	case WM_CREATE:
 	{
 		Window* window = (Window*)((LPCREATESTRUCT)lparam)->lpCreateParams;
-		
 		SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)window);
 		window->setHWND(hwnd);
 		window->onCreate();
 		break;
 	}
-
+	case WM_SETFOCUS:
+	{
+		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		window->onFocus();
+		break;
+	}
+	case WM_KILLFOCUS:
+	{
+		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		window->onKillFocus();
+		break;
+	}
 	case WM_DESTROY:
 	{
-		// Event fired when the window is destroyed
-		Window* window = (Window*)GetWindowLong(hwnd, GWLP_USERDATA);
+		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		window->onDestroy();
 		::PostQuitMessage(0);
 		break;
@@ -42,9 +49,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 
 bool Window::init()
 {
-
-
-	//Setting up WNDCLASSEX object
 	WNDCLASSEX wc;
 	wc.cbClsExtra = NULL;
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -58,29 +62,25 @@ bool Window::init()
 	wc.lpszMenuName = L"";
 	wc.style = NULL;
 	wc.lpfnWndProc = &WndProc;
-	
+
 	if (!::RegisterClassEx(&wc)) {
 		return false;
 	}
-	
 
-		
-	m_hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"MyWindowClass", L"DirectX Game",
-		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768,
+	
+	m_hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"MyWindowClass", L"DirectX Application",
+		WS_CAPTION | WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768,
 		NULL, NULL, NULL, this);
 
-	//bad if CreateWindowEx returns false
+	
 	if (!m_hwnd) {
 		return false;
 	}
-	//show the window
+
 	::ShowWindow(m_hwnd, SW_SHOW);
 	::UpdateWindow(m_hwnd);
 
-	// YES, it is running now : )
 	m_is_run = true;
-
-
 
 	return true;
 }
@@ -105,8 +105,9 @@ bool Window::broadcast()
 
 bool Window::release()
 {
-	if (!::DestroyWindow(m_hwnd))
+	if (!::DestroyWindow(m_hwnd)) {
 		return false;
+	}
 
 	return true;
 }
@@ -116,6 +117,17 @@ bool Window::isRun()
 	return m_is_run;
 }
 
+RECT Window::getClientWindowRect()
+{
+	RECT rc;
+	::GetClientRect(this->m_hwnd, &rc);
+	return rc;
+}
+
+void Window::setHWND(HWND hwnd)
+{
+	this->m_hwnd = hwnd;
+}
 
 void Window::onCreate()
 {
@@ -130,17 +142,12 @@ void Window::onDestroy()
 	m_is_run = false;
 }
 
-RECT Window::getClientWindowRect()
+void Window::onFocus()
 {
-	RECT rc;
-	::GetClientRect(this->m_hwnd, &rc);
-	return rc;
 }
 
-void Window::setHWND(HWND hwnd)
+void Window::onKillFocus()
 {
-	this->m_hwnd = hwnd;
-
 }
 
 Window::~Window()

@@ -11,6 +11,7 @@ struct vertex
 	Vector3D color1;
 };
 
+
 __declspec(align(16))
 struct constant
 {
@@ -20,12 +21,8 @@ struct constant
 	unsigned int m_time;
 };
 
+
 AppWindow::AppWindow()
-{
-}
-
-
-AppWindow::~AppWindow()
 {
 }
 
@@ -44,11 +41,10 @@ void AppWindow::updateQuadPosition()
 	m_delta_scale += m_delta_time / 0.55f;
 
 
-	cc.m_world.setScale(Vector3D(1, 1, 1));
+	cc.m_world.setScale(Vector3D(m_scale_cube, m_scale_cube, m_scale_cube));
 
 	temp.setIdentity();
 	temp.setRotationZ(0.0f);
-	// order of operations matters here ...|| temp *= cc.m_world
 	cc.m_world *= temp;
 
 	temp.setIdentity();
@@ -73,6 +69,11 @@ void AppWindow::updateQuadPosition()
 	m_cb->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);
 }
 
+
+AppWindow::~AppWindow()
+{
+}
+
 void AppWindow::onCreate()
 {
 	Window::onCreate();
@@ -87,17 +88,17 @@ void AppWindow::onCreate()
 
 	vertex vertex_list[] =
 	{
-		//front face
-		{Vector3D(-0.5f,-0.5f,-0.5f),   Vector3D(1,0,0),  Vector3D(0,0,0) },
-		{Vector3D(-0.5f,0.5f,-0.5f),    Vector3D(0,1,0),  Vector3D(1,1,1) },
-		{ Vector3D(0.5f,0.5f,-0.5f),    Vector3D(0,0,1),  Vector3D(1,1,0) },
-		{ Vector3D(0.5f,-0.5f,-0.5f),   Vector3D(1,0,1),  Vector3D(0,1,1) },
+		//front
+		{Vector3D(-0.5f,-0.5f,-0.5f),    Vector3D(1.f,0.f,0.f),  Vector3D(1.f,1.f,1.f) },
+		{Vector3D(-0.5f,0.5f,-0.5f),    Vector3D(0.f,1.f,0.f), Vector3D(0.f,0.f,0.f)},
+		{ Vector3D(0.5f,0.5f,-0.5f),   Vector3D(0.f,0.f,1.f),  Vector3D(1.f,0.f,1.f) },
+		{ Vector3D(0.5f,-0.5f,-0.5f),     Vector3D(1.f,1.f,0.f), Vector3D(0.f,1.f,1.f) },
 
-		//back face
-		{ Vector3D(0.5f,-0.5f,0.5f),    Vector3D(0,1,1),  Vector3D(1,0,1) },
-		{ Vector3D(0.5f,0.5f,0.5f),     Vector3D(1,1,0),  Vector3D(0,0,1) },
-		{ Vector3D(-0.5f,0.5f,0.5f),    Vector3D(1,1,1),  Vector3D(0,1,0) },
-		{ Vector3D(-0.5f,-0.5f,0.5f),   Vector3D(0,0,0),  Vector3D(1,0,0) }
+		//back
+		{ Vector3D(0.5f,-0.5f,0.5f),    Vector3D(0.f,1.f,1.f), Vector3D(1.f,1.f,0.f) },
+		{ Vector3D(0.5f,0.5f,0.5f),    Vector3D(1.f,0.f,1.f), Vector3D(0.f,0.f,1.f) },
+		{ Vector3D(-0.5f,0.5f,0.5f),   Vector3D(0.f,0.f,0.f),  Vector3D(0.f,1.f,0.f) },
+		{ Vector3D(-0.5f,-0.5f,0.5f),     Vector3D(1.f,1.f,1.f), Vector3D(1.f,0.f,0.f) }
 
 	};
 
@@ -107,9 +108,9 @@ void AppWindow::onCreate()
 
 	unsigned int index_list[] =
 	{
-		//front 
-		0,1,2,
-		2,3,0,
+		//front
+		0,1,2,  
+		2,3,0,  
 		//back
 		4,5,6,
 		6,7,4,
@@ -132,6 +133,8 @@ void AppWindow::onCreate()
 	UINT size_index_list = ARRAYSIZE(index_list);
 
 	m_ib->load(index_list, size_index_list);
+
+
 
 
 	void* shader_byte_code = nullptr;
@@ -164,11 +167,17 @@ void AppWindow::onUpdate()
 
 	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,
 		0, 0.3f, 0.4f, 1);
-
+	
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
+
+
+
 	updateQuadPosition();
+
+
+
 
 	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
 	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
@@ -180,11 +189,13 @@ void AppWindow::onUpdate()
 	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
 	GraphicsEngine::get()->getImmediateDeviceContext()->setIndexBuffer(m_ib);
 
+
 	GraphicsEngine::get()->getImmediateDeviceContext()->drawIndexedTriangleList(m_ib->getSizeIndexList(), 0, 0);
 	m_swap_chain->present(true);
 
+
 	m_old_delta = m_new_delta;
-	m_new_delta = ::GetTickCount(); //getTickCount64 gets an intellisense++
+	m_new_delta = ::GetTickCount();
 
 	m_delta_time = (m_old_delta) ? ((m_new_delta - m_old_delta) / 1000.0f) : 0;
 }
@@ -201,34 +212,63 @@ void AppWindow::onDestroy()
 	GraphicsEngine::get()->release();
 }
 
+void AppWindow::onFocus()
+{
+	InputSystem::get()->addListener(this);
+}
+
+void AppWindow::onKillFocus()
+{
+	InputSystem::get()->removeListener(this);
+}
+
 void AppWindow::onKeyDown(int key)
-{// TODO ....accelerate rotation over time...
-	if (key == 'W') {
-		m_rot_x += 0.707f * m_delta_time;
+{
+	if (key == 'W')
+	{
+		m_rot_x += 3.14f * m_delta_time;
 	}
-	else if (key == 'S') {
-		m_rot_x -= 0.707f * m_delta_time;
+	else if (key == 'S')
+	{
+		m_rot_x -= 3.14f * m_delta_time;
 	}
-	else if (key == 'A') {
-		m_rot_y += 0.707f * m_delta_time;
+	else if (key == 'A')
+	{
+		m_rot_y += 3.14f * m_delta_time;
 	}
-	else if (key == 'D') {
-		m_rot_y -= 0.707f * m_delta_time;
+	else if (key == 'D')
+	{
+		m_rot_y -= 3.14f * m_delta_time;
 	}
 }
 
 void AppWindow::onKeyUp(int key)
-{// TODO ....accelerate rotation over time...
-	if (key == 'W') {
-		m_rot_x += 0.707f * m_delta_time;
-	}
-	else if (key == 'S') {
-		m_rot_x -= 0.707f * m_delta_time;
-	}
-	else if (key == 'A') {
-		m_rot_y += 0.707f * m_delta_time;
-	}
-	else if (key == 'D') {
-		m_rot_y -= 0.707f * m_delta_time;
-	}
+{
+
+}
+
+void AppWindow::onMouseMove(const Point& delta_mouse_pos)
+{
+	m_rot_x -= delta_mouse_pos.m_y * m_delta_time;
+	m_rot_y -= delta_mouse_pos.m_x * m_delta_time;
+}
+
+void AppWindow::onLeftMouseDown(const Point& mouse_pos)
+{
+	m_scale_cube = 0.5f;
+}
+
+void AppWindow::onLeftMouseUp(const Point& mouse_pos)
+{
+	m_scale_cube = 1.0f;
+}
+
+void AppWindow::onRightMouseDown(const Point& mouse_pos)
+{
+	m_scale_cube = 2.0f;
+}
+
+void AppWindow::onRightMouseUp(const Point& mouse_pos)
+{
+	m_scale_cube = 1.0f;
 }

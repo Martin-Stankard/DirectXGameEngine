@@ -12,7 +12,7 @@ Worked out from (some minor syntax updates) from this Youtube series:
 - solution config: debug
 - solution platform: x86
 - Local Windows debugger
-- (ctrl + f5) -> See a cube that rotates via {w,a,s,d} on a teal background pop up!
+- (ctrl + f5) -> See a cube that rotates via {w,a,s,d} or mouse on a teal background pop up!
 
 
 ## Notes:
