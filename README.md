@@ -12,7 +12,7 @@ Worked out from (some minor syntax updates) from this Youtube series:
 - solution config: debug
 - solution platform: x86
 - Local Windows debugger
-- (ctrl + f5) -> See a regular square with gently animated color shifts on a teal background pop up!
+- (ctrl + f5) -> See a smoothly rotating cube with gently animated color shifts on a teal background pop up!
 
 
 ## Notes:
