@@ -40,3 +40,8 @@ Worked out from (some minor syntax updates) from this Youtube series:
 - World Space
 - View Space
 - Screen / Projection Space
+- cam/view = obj-mat * cam-mat^-1 = world-matrix * view-matrix
+    - camera-new-position-on-dir-axis = (pos-current + distance) * direction-axis
+- projection matrix
+    - orthographic
+    - perspective
