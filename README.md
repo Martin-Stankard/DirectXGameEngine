@@ -1,5 +1,5 @@
 # DirectXGameEngine
-#### From Scratch, C++ 3D Engine using Direct X 11
+#### From Scratch, C++ 3D Engine using Direct X 11 (Windows only)
 
 Worked out from (some minor syntax updates) from this Youtube series: 
 - [C++ 3D Game From Scratch](https://www.youtube.com/watch?v=ssGka-bSTvQ&list=PLv8DnRaQOs5-ST_VDqgbbMRtzMtpK36Hy)
@@ -12,7 +12,7 @@ Worked out from (some minor syntax updates) from this Youtube series:
 - solution config: debug
 - solution platform: x86
 - Local Windows debugger
-- (ctrl + f5) -> See a smoothly rotating cube with gently animated color shifts on a teal background pop up!
+- (ctrl + f5) -> See a cube that rotates via {w,a,s,d} on a teal background pop up!
 
 
 ## Notes:
