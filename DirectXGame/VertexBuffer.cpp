@@ -1,19 +1,15 @@
-
 #include "VertexBuffer.h"
 #include "GraphicsEngine.h"
 
-VertexBuffer::VertexBuffer() : m_layout(0), m_buffer(0)
+
+VertexBuffer::VertexBuffer() :m_layout(0), m_buffer(0)
 {
 }
 
 bool VertexBuffer::load(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, UINT size_byte_shader)
 {
-	if (m_buffer) {
-		m_buffer->Release();
-	}
-	if (m_layout) {
-		m_layout->Release();
-	}
+	if (m_buffer)m_buffer->Release();
+	if (m_layout)m_layout->Release();
 
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_DEFAULT;
@@ -36,42 +32,9 @@ bool VertexBuffer::load(void* list_vertices, UINT size_vertex, UINT size_list, v
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		//SEMANTIC NAME - SEMANTIC INDEX - FORMAT - INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
-		{
-			"POSITION",					 //SEMANTIC NAME
-			0,							 //SEMANTIC INDEX
-			DXGI_FORMAT_R32G32B32_FLOAT, //FORMAT
-			0,							 //INPUT SLOT
-			0,							 //ALIGNED BYTE OFFSET
-			D3D11_INPUT_PER_VERTEX_DATA, //INPUT SLOT CLASS
-			0							 //INSTANCE DATA STEP RATE
-		},
-		{
-			"POSITION",					 //SEMANTIC NAME
-			1,							 //SEMANTIC INDEX
-			DXGI_FORMAT_R32G32B32_FLOAT, //FORMAT
-			0,							 //INPUT SLOT
-			12,							 //ALIGNED BYTE OFFSET.
-			D3D11_INPUT_PER_VERTEX_DATA, //INPUT SLOT CLASS
-			0							 //INSTANCE DATA STEP RATE
-		},
-		{
-			"COLOR",					 //SEMANTIC NAME
-			0,							 //SEMANTIC INDEX
-			DXGI_FORMAT_R32G32B32_FLOAT, //FORMAT
-			0,							 //INPUT SLOT
-			24,							 //ALIGNED BYTE OFFSET, here is sum of all previous attributes
-			D3D11_INPUT_PER_VERTEX_DATA, //INPUT SLOT CLASS
-			0							 //INSTANCE DATA STEP RATE
-		},
-		{
-			"COLOR",					 //SEMANTIC NAME
-			1,							 //SEMANTIC INDEX
-			DXGI_FORMAT_R32G32B32_FLOAT, //FORMAT
-			0,							 //INPUT SLOT
-			36,							 //ALIGNED BYTE OFFSET, here is sum of all previous attributes
-			D3D11_INPUT_PER_VERTEX_DATA, //INPUT SLOT CLASS
-			0							 //INSTANCE DATA STEP RATE
-		}
+		{"POSITION", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,D3D11_INPUT_PER_VERTEX_DATA ,0},
+		{ "COLOR", 0,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 12,D3D11_INPUT_PER_VERTEX_DATA ,0 },
+		{ "COLOR", 1,  DXGI_FORMAT_R32G32B32_FLOAT, 0, 24,D3D11_INPUT_PER_VERTEX_DATA ,0 }
 	};
 
 	UINT size_layout = ARRAYSIZE(layout);
@@ -96,6 +59,7 @@ bool VertexBuffer::release()
 	delete this;
 	return true;
 }
+
 
 VertexBuffer::~VertexBuffer()
 {

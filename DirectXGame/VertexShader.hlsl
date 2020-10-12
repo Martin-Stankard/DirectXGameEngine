@@ -1,7 +1,6 @@
 struct VS_INPUT
 {
 	float4 position: POSITION;
-	float4 position1: POSITION1;
 	float3 color: COLOR;
 	float3 color1: COLOR1;
 };
@@ -29,17 +28,17 @@ VS_OUTPUT vsmain(VS_INPUT input)
 {
 	VS_OUTPUT output = (VS_OUTPUT)0;
 
-	unsigned int prediod_ms = 3000;
-	
+	// better number precision
+	// unsigned int prediod_ms = 3000;	
 	// output.position = lerp(input.position, input.position1, (sin(2.0f * 3.1416f / prediod_ms * (m_time % prediod_ms)) + 1.0f) / 2.0f);
 	
-	// WORLD SPACE
+	//world space
 	output.position = mul(input.position, m_world);
 
-	// VIEW SPACE
+	//view space
 	output.position = mul(output.position, m_view);
 
-	//SCREEN SPACE
+	//screen space
 	output.position = mul(output.position, m_proj);
 
 	output.color = input.color;
