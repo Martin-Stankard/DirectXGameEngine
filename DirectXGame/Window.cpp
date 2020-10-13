@@ -1,4 +1,7 @@
+
+
 #include "Window.h"
+
 
 Window::Window()
 {
@@ -8,11 +11,14 @@ Window::Window()
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
+	
 	switch (msg)
 	{
 	case WM_CREATE:
 	{
+		
 		Window* window = (Window*)((LPCREATESTRUCT)lparam)->lpCreateParams;
+		
 		SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)window);
 		window->setHWND(hwnd);
 		window->onCreate();
@@ -20,18 +26,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	}
 	case WM_SETFOCUS:
 	{
+		
 		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		window->onFocus();
 		break;
 	}
 	case WM_KILLFOCUS:
 	{
+		// TODO viewport motion seems to be stuck to mouse off focus
 		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		window->onKillFocus();
 		break;
 	}
 	case WM_DESTROY:
 	{
+		// Event fired when the window is destroyed
 		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		window->onDestroy();
 		::PostQuitMessage(0);
@@ -76,7 +85,7 @@ bool Window::init()
 	if (!m_hwnd) {
 		return false;
 	}
-
+	
 	::ShowWindow(m_hwnd, SW_SHOW);
 	::UpdateWindow(m_hwnd);
 
@@ -107,7 +116,7 @@ bool Window::release()
 {
 	if (!::DestroyWindow(m_hwnd)) {
 		return false;
-	}
+}
 
 	return true;
 }

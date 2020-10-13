@@ -1,3 +1,5 @@
+
+
 #pragma once
 #include "InputListener.h"
 #include <unordered_set>
@@ -16,9 +18,7 @@ public:
 	void setCursorPosition(const Point& pos);
 	void showCursor(bool show);
 
-
 	static InputSystem* get();
-
 private:
 	std::unordered_set<InputListener*> m_set_listeners;
 	unsigned char m_keys_state[256] = {};

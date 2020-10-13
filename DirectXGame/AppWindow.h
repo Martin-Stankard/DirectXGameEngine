@@ -24,6 +24,7 @@ public:
 	virtual void onCreate() override;
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
+	//TODO, currently sticky to mouse off focus
 	virtual void onFocus() override;
 	virtual void onKillFocus() override;
 
