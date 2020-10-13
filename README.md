@@ -45,3 +45,7 @@ Worked out from (some minor syntax updates) from this Youtube series:
 - projection matrix
     - orthographic
     - perspective
+
+## RAI principle in refactor
+- [Resource acquisition is initialization](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization)
+    - Seems similar to Dependency Injection
